@@ -1,5 +1,11 @@
-angular.module('thGeolocation', [])
-	.factory('thGeolocation', function($rootScope) {
+define(function(require) {
+	'use strict';
+	
+	
+	var angular = require('components/angular/angular');
+	
+	angular.module('thGeolocation', [])
+	.factory('thGeolocation', ['$rootScope', function($rootScope) {
 		var watchID, 
 			fakeID = 0, 
 			geolocationConfig = {}, 
@@ -118,4 +124,5 @@ angular.module('thGeolocation', [])
 		Geolocation.getCurrentPosition = getPosition(false);
 		
 		return Geolocation;
-	});
+	}]);
+});
