@@ -2,7 +2,7 @@ define(function(require) {
 	'use strict';
 	
 	
-	var angular = require('components/angular/angular');
+	var angular = require('bower_components/angular/angular');
 	
 	angular.module('thGeolocation', [])
 	.factory('thGeolocation', ['$rootScope', function($rootScope) {
