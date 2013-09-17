@@ -1,0 +1,25 @@
+{
+  "name": "angularjs-geolocation",
+  "main": "angularjs-geolocation.js",
+  "version": "1.0.0",
+  "authors": [
+    "Mathieu Rochette <mathieu@rochette.cc>"
+  ],
+  "description": "AngularJS module around geolocation brower API",
+  "keywords": [
+    "geolocation",
+    "angularjs"
+  ],
+  "license": "aGPLv3",
+  "homepage": "https://texthtml.net/trac/projects/webapp-lib-angularjs-geolocation",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.0.8"
+  }
+}
