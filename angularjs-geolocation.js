@@ -97,7 +97,18 @@ define(function(require) {
 							for(var i in response.coords) {
 								Geolocation.position.coords[i] = response.coords[i];
 							}
-							success && success(Geolocation.position);
+							
+							if(options.required_accuracy !== undefined && Geolocation.position.coords.accuracy > options.required_accuracy) {
+								if(typeof failure === 'function') {
+									failure({
+										code: 'insufficient-accuracy', 
+										message: 'insufficient accuracy'
+									});
+								}
+							}
+							else if(typeof success === 'function') {
+								success(Geolocation.position);
+							}
 							
 							if($rootScope.$$phase === null) {
 								$rootScope.$apply();
@@ -108,7 +119,9 @@ define(function(require) {
 							Geolocation.position = undefined;
 							Geolocation.error = error;
 							
-							failure && failure(Geolocation.error);
+							if(typeof failure === 'function') {
+								failure(Geolocation.error);
+							}
 							
 							if($rootScope.$$phase === null) {
 								$rootScope.$apply();
@@ -120,8 +133,26 @@ define(function(require) {
 				};
 			};
 		
-		Geolocation.watchPosition      = getPosition(true);
-		Geolocation.getCurrentPosition = getPosition(false);
+		Geolocation.watchPosition         = getPosition(true);
+		Geolocation.getCurrentPosition    = getPosition(false);
+		Geolocation.searchCurrentPosition = function(success, failure) {
+			return Geolocation.watchPosition(
+				function(position) {
+					Geolocation.stopWatching();
+					if(typeof success === 'function') {
+						success.apply(this, arguments);
+					}
+				}, 
+				function(error) {
+					if(error.code !== 'insufficient-accuracy') {
+						Geolocation.stopWatching();
+						if(typeof failure === 'function') {
+							failure.apply(this, arguments);
+						}
+					}
+				}
+			);
+		}
 		
 		return Geolocation;
 	}]);
