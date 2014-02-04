@@ -62,7 +62,7 @@ define(function(require) {
 						fake.stopped = (function(id) {
 							return function() {
 								return watching && id !== fakeID;
-							}
+							};
 						}) (fakeID);
 						fct = function(success, failure, options) {
 							var response = fake(function(response) {
@@ -93,7 +93,8 @@ define(function(require) {
 							Geolocation.position = {
 								coords: {}, 
 								timestamp: response.timestamp
-							}
+							};
+							
 							for(var i in response.coords) {
 								Geolocation.position.coords[i] = response.coords[i];
 							}
@@ -152,7 +153,7 @@ define(function(require) {
 					}
 				}
 			);
-		}
+		};
 		
 		return Geolocation;
 	}]);
